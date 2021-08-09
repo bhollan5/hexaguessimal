@@ -8,12 +8,38 @@
       <br/>
   
       <router-link to="/about" class="button-link">How to play</router-link>
-      <router-link to="/achievements" class="button-link" v-if="0">Achievements</router-link>
+      <router-link to="/achievements" class="button-link">Achievements</router-link>
       <router-link to="/Store" class="button-link" v-if="0">Store</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+
+export default {
+  name: 'AppBase',
+  data() {
+    return {
+      current_tagline: "",
+      taglines: [
+        "Rated #0 best game (that's like #1 but better haha)",
+        "Light is electromagnetic waves!",
+        "Hexadecimal uses 16 symbols, while decimal uses 10!",
+        "Become an expert in hexadecimal!",
+        "Contains <span @click='get_secret()'>secrets!!</span>'"
+      ]
+
+    }
+  },
+  methods: {
+    get_secret() {
+
+    }
+  }
+}
+
+</script>
 
 <style>
 /*  Background and body elements   */
@@ -23,6 +49,9 @@ html, body {
   height: 100%;
 }
 
+.subtitle {
+  font-style: italic;
+}
 .button-link {
   background:#2c3e50;
   color: white;

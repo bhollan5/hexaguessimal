@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h3>How to play Hexaguessimal</h3>
-
+    <p style="font-style: italic;">The color guessing game!</p>
     <br/>
 
     <p>Adjust the sliders to try to match the colors. </p>
