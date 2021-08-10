@@ -24,7 +24,8 @@
       <about v-if="popup == 'about'"></about>
       <achievements v-else-if="popup == 'achievements'"
        :achievements="achievements"></achievements>
-      <store v-if="popup == 'store'" :storeitems="store_items"></store>
+      <store v-if="popup == 'store'" :storeitems="store_items"
+       v-on:buy="buy_item($event)"></store>
     </div>
 
     <!-- -------- -->
@@ -115,7 +116,7 @@ export default {
 
       //  GAME VARIABLES:
 
-      points: 10,   //  Indicating the current point amt.
+      points: 100,   //  Indicating the current point amt.
 
       answer_color: { r: 1, g: 2, b: 3 },
       guess_color: { r: 10, g: 20, b: 30 },
@@ -189,6 +190,9 @@ export default {
           img: require('./assets/achievements/11_CMYK.png'),
         }, 
       ],
+
+      //  Store items
+      
       
       store_items: [
         { name: 'Gradient Mode',
@@ -316,6 +320,14 @@ export default {
 
       this.in_game = false;
     },
+
+    buy_item(item_num) {
+
+      if (this.store_items[item_num].locked && this.store_items[item_num].price < this.points) {
+        this.store_items[item_num].locked = false;
+        this.points -= this.store_items[item_num].price;
+      }
+    }
 
   },
   mounted() {

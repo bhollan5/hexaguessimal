@@ -6,7 +6,8 @@
     <br/>
     <div id="store-icons">
       <img v-for="(item, i) in storeitems" :src="item.img" class="store-item" :key="i"
-      @mouseover="selected = i" @mouseleave="selected = -1" :class="{ 'locked': item.locked }">
+      @mouseover="selected = i" @mouseleave="selected = -1" :class="{ 'locked': item.locked }"
+      @click="$emit('buy', i)">
     </div>
     
     <br/><br/>
