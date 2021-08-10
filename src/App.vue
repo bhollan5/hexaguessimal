@@ -6,7 +6,7 @@
     <!-- -------- -->
     <div id="nav">
       <h1>Hexa-guess-imal</h1>
-      <p class="subtitle">{{current_tagline}}</p>
+      <p class="subtitle" @click="get_secret()" v-html="current_tagline"></p>
       <br/>
   
       <div style="display: flex;justify-content:space-around;">
@@ -107,11 +107,13 @@ export default {
         "Light is electromagnetic waves!",
         "Hexadecimal uses 16 symbols, while decimal uses 10!",
         "Become an expert in hexadecimal!",
-        "Contains <span @click='get_secret()'>secrets!!</span>'",
+        "Contains secrets!!",
         "Hex codes follow the RGB color description format: #RRGGBB"
       ],
 
       popup: '',    //  Indicating the popup menu.
+
+      //  GAME VARIABLES:
 
       points: 10,   //  Indicating the current point amt.
 
@@ -122,6 +124,8 @@ export default {
 
       in_game: true,  // Is a game currently being played?
 
+      //  ACHIEVEMENT VARIABLES
+      perfect_game_count: 0,
 
       achievements: [
         { name: 'One color perfect',
@@ -228,6 +232,20 @@ export default {
     }
   },
   methods: {
+    change_tagline() {
+      var pre_tagline = this.current_tagline;
+      this.current_tagline = this.taglines[Math.floor(Math.random() * this.taglines.length)];
+      if (pre_tagline == this.current_tagline) {
+        this.change_tagline();
+      }
+    },
+
+    get_secret() {
+      if (this.current_tagline == "Contains secrets!!") {
+        this.achievements[5].locked = false;
+      }
+    },
+
     new_color() {
       var new_color = {
         r: Math.floor(Math.random() * 256),
@@ -280,7 +298,20 @@ export default {
         }
         if (exact_amount == 3) {
           this.points += 10;
+          this.perfect_game_count++;
+          if (this.perfect_game_count == 1) {
+            this.achievements[0].locked = false;
+          } else if (this.perfect_game_count == 3) {
+            this.achievements[1].locked = false;
+          }
         } 
+      }
+
+      if (this.points > 100 && this.achievements[3].locked) {
+        this.achievements[3].locked = false;
+      } 
+      if (this.points > 250 && this.achievements[4].locked) {
+        this.achievements[4].locked = false;
       }
 
       this.in_game = false;
@@ -290,6 +321,11 @@ export default {
   mounted() {
     this.guess_color = this.new_color();
     this.answer_color = this.new_color();
+    this.change_tagline();
+    setInterval(function(){
+        this.change_tagline();
+    }.bind(this), 3000);
+    
   }
 }
 
@@ -305,6 +341,11 @@ html, body {
 
 .subtitle {
   font-style: italic;
+
+}
+.subtitle span {
+  text-decoration: underline;
+  cursor: pointer;
 }
 .button-link {
   background:#2c3e50;

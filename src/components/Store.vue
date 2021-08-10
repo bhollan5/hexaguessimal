@@ -5,17 +5,17 @@
     <h3>The store!</h3>
     <br/>
     <div id="store-icons">
-      <img v-for="(item, i) in store_items" :src="item.img" class="store-item" :key="i"
+      <img v-for="(item, i) in storeitems" :src="item.img" class="store-item" :key="i"
       @mouseover="selected = i" @mouseleave="selected = -1" :class="{ 'locked': item.locked }">
     </div>
     
     <br/><br/>
     <div id="store-item-description">
       <div v-if="selected != -1">
-        <h3>{{ store_items[selected].name }}</h3>
-        <p>{{ store_items[selected].description }}</p>
-        <p>Price: {{ store_items[selected].price }}</p>
-        <p>Status: <b v-if="store_items[selected].locked">Locked</b><b v-else>Unlocked</b></p>
+        <h3>{{ storeitems[selected].name }}</h3>
+        <p>{{ storeitems[selected].description }}</p>
+        <p>Price: {{ storeitems[selected].price }}</p>
+        <p>Status: <b v-if="storeitems[selected].locked">Locked</b><b v-else>Unlocked</b></p>
       </div>
     </div>
 
