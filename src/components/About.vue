@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <br/>
     <h3>How to play Hexaguessimal</h3>
     <p style="font-style: italic;">The color guessing game!</p>
     <br/>
@@ -10,9 +11,6 @@
     <p>You'll also get a bonus +10 points if all three color values are exactly correct. </p>
   </div>
 
-  <router-link to="/">
-    Back to the game.
-  </router-link>
 </template>
 
 <style scoped> 
