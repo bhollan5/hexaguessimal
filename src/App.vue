@@ -25,7 +25,7 @@
       <achievements v-else-if="popup == 'achievements'"
        :achievements="achievements"></achievements>
       <store v-if="popup == 'store'" :storeitems="store_items"
-       v-on:buy="buy_item($event)"></store>
+       v-on:buy="buy_item($event)" :points="points"></store>
     </div>
 
     <!-- -------- -->
@@ -34,8 +34,9 @@
     <div class="game">
 
       <div id="color-displays">
-        <ColorDisplay :color_value="answer_color" :hidden="in_game" />
-        <ColorDisplay :color_value="guess_color" />
+        <ColorDisplay :color_value="answer_color" :hidden="in_game" v-if="!store_items[0].on"/>
+        <ColorDisplay :color_value="guess_color" v-if="!store_items[0].on" />
+        <Gradient :color_value="answer_color" :color_value2="guess_color" v-if="store_items[0].on" :hidden="in_game"></Gradient>
       </div>
 
       <div class="button-link" style="margin: auto;" @click="answer_color = new_color()">New Color</div>
@@ -86,6 +87,8 @@
 <script>
 
 import ColorDisplay from '@/components/ColorDisplay.vue';
+import Gradient from '@/components/Gradient.vue';
+
 
 import About from '@/components/About.vue';
 import Achievements from '@/components/Achievements.vue';
@@ -96,6 +99,7 @@ export default {
   name: 'AppBase',
   components: {
     ColorDisplay,
+    Gradient,
     About,
     Achievements,
     Store
@@ -199,36 +203,42 @@ export default {
           description: 'Toggle a gradient between the true color and guess color.',
           price: 25,
           locked: true,
+          on: false,
           img: require('./assets/store/1_gradient.png')
         }, { 
           name: 'HSL Mode',
           description: 'Use HSL sliders, instead of RBG sliders.',
           price: 10,
           locked: true,
+          on: true,
           img: require('./assets/store/2_HSL.png')
         }, { 
           name: 'RGBA Mode',
           description: 'Use RGBA sliders, instead of RBG sliders.',
           price: 15,
           locked: true,
+          on: true,
           img: require('./assets/store/3_RGBA.png')
         }, { 
           name: 'CMYK Mode',
           description: 'Use CMYK sliders, instead of RBG sliders.',
           price: 25,
           locked: true,
+          on: true,
           img: require('./assets/store/4_CMYK.png')
         }, { 
           name: 'Dark mode',
           description: 'Set the background to a dark color, and the text to white.',
           price: 50,
           locked: true,
+          on: true,
           img: require('./assets/store/5_darkmode.png')
         }, { 
           name: 'Background changer',
           description: 'Pick the background color.',
           price: 100,
           locked: true,
+          on: true,
           img: require('./assets/store/6_BGchanger.png')
         },
       ]
@@ -323,10 +333,31 @@ export default {
 
     buy_item(item_num) {
 
+      //  Buying a new item
       if (this.store_items[item_num].locked && this.store_items[item_num].price < this.points) {
         this.store_items[item_num].locked = false;
         this.points -= this.store_items[item_num].price;
+
+        //  First purchase achievement.
+        if (this.achievements[2].locked) 
+          this.achievements[2].locked = false;
+
+        //  All purchases achievement
+        if(this.achievements[6].locked) {
+          var still_things_to_buy = false;
+          for (var i = 0; i < this.store_items.length; i++ ) {
+            if (this.store_items[i].locked) 
+              still_things_to_buy = true;
+          }
+          this.achievements[6].locked = still_things_to_buy;
+        }
       }
+
+      //  Toggle
+      else if (this.store_items[item_num].locked == false) {
+        this.store_items[item_num].on = !this.store_items[item_num].on;
+      }
+      
     }
 
   },
@@ -443,7 +474,7 @@ h1 {
 
 #page-darkener {
   width: 100%;
-  height: 100%;
+  height: calc(100% + 20px);
   position: absolute;
   top: 0px;
   left: 0px;

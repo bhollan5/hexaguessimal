@@ -5,11 +5,17 @@
     <h3>The store!</h3>
     <br/>
     <div id="store-icons">
-      <img v-for="(item, i) in storeitems" :src="item.img" class="store-item" :key="i"
-      @mouseover="selected = i" @mouseleave="selected = -1" :class="{ 'locked': item.locked }"
-      @click="$emit('buy', i)">
+      <div class="store-item" v-for="(item, i) in storeitems" :key="i">
+        <img :src="item.img" class="store-item-image" @mouseover="selected = i" 
+          @mouseleave="selected = -1" :class="{ 'locked': item.locked }"
+          @click="$emit('buy', i)">
+        <div class="store-item-toggle" v-if="!item.locked && item.on">ON</div>
+        <div class="store-item-toggle" v-else-if="!item.locked && !item.on">OFF</div>
+      </div>
     </div>
     
+    <br/><br/>
+    <p>Your current point total: {{ points }} </p>
     <br/><br/>
     <div id="store-item-description">
       <div v-if="selected != -1">
@@ -32,6 +38,10 @@ export default {
     storeitems:  {
       type: Array,
       required: true
+    },
+    points: {
+      type: Number,
+      requred: true
     }
   },
 
