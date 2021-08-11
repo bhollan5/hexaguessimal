@@ -63,6 +63,10 @@
         </div>
       </div>
 
+      <div id="slider-container" v-if="0">
+        <rgb-slider @change="guess_color = $event" :color_value="guess_color" :hints="hints"></rgb-slider>
+      </div>
+
       <br/>
 
       <div style="display:flex;width:300px;margin: auto;">
@@ -89,6 +93,7 @@
 import ColorDisplay from '@/components/ColorDisplay.vue';
 import Gradient from '@/components/Gradient.vue';
 
+import rgbSlider from '@/components/sliders/rgbSlider.vue';
 
 import About from '@/components/About.vue';
 import Achievements from '@/components/Achievements.vue';
@@ -102,7 +107,9 @@ export default {
     Gradient,
     About,
     Achievements,
-    Store
+    Store,
+
+    rgbSlider
   },
   data() {
     return {
@@ -205,7 +212,7 @@ export default {
           locked: true,
           on: false,
           img: require('./assets/store/1_gradient.png')
-        }, { 
+        }, /*{ 
           name: 'HSL Mode',
           description: 'Use HSL sliders, instead of RBG sliders.',
           price: 10,
@@ -240,7 +247,7 @@ export default {
           locked: true,
           on: true,
           img: require('./assets/store/6_BGchanger.png')
-        },
+        }, */
       ]
 
     }
@@ -490,7 +497,7 @@ h1 {
   color: white;
   z-index: 1;
   position: absolute;
-  left: 22%;
+  left: 20%;
   top: 100px;
 }
 
