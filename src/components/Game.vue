@@ -90,7 +90,8 @@ export default {
         "Hexadecimal uses 16 symbols, while decimal uses 10!",
         "Become an expert in hexadecimal!",
         "Contains secrets!!",
-        "Hex codes follow the RGB color description format: #RRGGBB"
+        "Hex codes follow the RGB color description format: #RRGGBB",
+        "The backgrounds for this game come from <a href='https://projects.verou.me/css3patterns/' target='_blank'>here</a>!"
       ],
 
     }
@@ -217,14 +218,14 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #e5e5f7;
   width: 100%;
   margin: 0px;
   height: 100%;
-  background: linear-gradient(135deg, #444cf755 25%, transparent 25%) -10px 0/ 20px 20px, 
-            linear-gradient(225deg, #444cf7 25%, transparent 25%) -10px 0/ 20px 20px, 
-            linear-gradient(315deg, #444cf755 25%, transparent 25%) 0px 0/ 20px 20px, 
-            linear-gradient(45deg, #444cf7 25%, #aaaadf 25%) 0px 0/ 20px 20px;
+  background: linear-gradient(-45deg, white 25%, transparent 25%, transparent 75%, black 75%, black) 0 0,
+    linear-gradient(-45deg, black 25%, transparent 25%, transparent 75%, white 75%, white) 1em 1em,
+    linear-gradient(45deg, black 17%, transparent 17%, transparent 25%, black 25%, black 36%, transparent 36%, transparent 64%, black 64%, black 75%, transparent 75%, transparent 83%, black 83%) 1em 1em;
+  background-color: white;
+  background-size: 2em 2em;
   color: #2c3e50;
   padding: 20px;
 }
