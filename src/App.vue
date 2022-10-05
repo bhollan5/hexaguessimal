@@ -1,7 +1,7 @@
 <template>
   <div id="content">
     <game></game>
-    <info-bar></info-bar>
+    <info-bar v-if="0"></info-bar>
 
   </div>
 </template>

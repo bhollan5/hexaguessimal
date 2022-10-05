@@ -6,6 +6,27 @@
     <br/>
 
     <!-- -------- -->
+    <!--   Menu   -->
+    <!-- -------- -->
+    <div id="menu">
+      <button class="button-link" @click="popup('how-to-play')">How to Play</button>
+      <button class="button-link" @click="popup('store')">Store</button>
+      <button class="button-link" @click="popup('achievements')">Achievements</button>
+    </div>
+    <br/>
+
+    <!-- --------- -->
+    <!--   Popup   -->
+    <!-- --------- -->
+    <div id="page-darkener" v-if="show_popup" @click="show_popup = false"></div>
+    <div id="popup" v-if="show_popup">
+      <about v-if="current_popup == 'how-to-play'"></about>
+      <achievements v-else-if="current_popup == 'achievements'"></achievements>
+      <store v-else-if="current_popup == 'store'"></store>
+    </div>
+    <br/>
+
+    <!-- -------- -->
     <!--   Game   -->
     <!-- -------- -->
     <div class="game">
@@ -51,6 +72,11 @@ import Gradient from '@/components/displays/Gradient.vue';
 
 import rgbSlider from '@/components/sliders/rgbSlider.vue';
 
+//popups
+import about from '@/components/popup/About.vue';
+import achievements from '@/components/popup/Achievements.vue';
+import store from '@/components/popup/Store.vue';
+
 
 export default {
   name: 'AppBase',
@@ -58,7 +84,11 @@ export default {
     ColorDisplay,
     Gradient,
 
-    rgbSlider
+    rgbSlider,
+
+    about,
+    achievements,
+    store
   },
 
   computed: {
@@ -94,9 +124,17 @@ export default {
         "The backgrounds for this game come from <a href='https://projects.verou.me/css3patterns/' target='_blank'>here</a>!"
       ],
 
+      show_popup: false,
+      current_popup: '',
+
     }
   },
   methods: {
+    popup(popup_name) {
+      this.show_popup = true;
+      this.current_popup = popup_name;
+    },
+
     change_tagline() {
       var pre_tagline = this.current_tagline;
       this.current_tagline = this.taglines[Math.floor(Math.random() * this.taglines.length)];
@@ -208,6 +246,10 @@ html, body {
   margin: 10px;
   cursor: pointer;
 }
+#menu .button-link {
+  width: 150px;
+  background: black;
+}
 
 .button-link.router-link-exact-active {
   color: #42b983;
@@ -285,7 +327,7 @@ h1 {
 
 #popup {
   width: 60%;
-  min-height: 700px;
+  min-height: 600px;
   background: black;
   border: solid gray 2px;
   color: white;
@@ -293,6 +335,9 @@ h1 {
   position: absolute;
   left: 20%;
   top: 100px;
+  padding: 25px;
+  box-sizing: border-box;
+  font-size: 24px;
 }
 
 
