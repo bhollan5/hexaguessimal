@@ -27,7 +27,7 @@ const state = () => ({
       img: require('../assets/achievements/3_100Pts.png')
     }, {
       name: '250 Points',
-      description: 'Earn 100 points.',
+      description: 'Earn 250 points.',
       locked: true,
       img: require('../assets/achievements/4_250Pts.png')
     }, {
